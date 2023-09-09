@@ -1,0 +1,18 @@
+version: '3'
+services:
+  tailscale:
+    image: tailscale:custom
+    privileged: true
+    hostname: tailscale01
+    pull_policy: never      # This will become the tailscale device name
+    container_name: tailscale
+    ports:
+      - 8888:8888
+    environment:
+      - TS_AUTHKEY=tskey-auth-k9n5jc5CNTRL-fVfM7cUczqEPko4u4neerEDNrHjizwTt
+    volumes:
+     - "/dev/net/tun:/dev/net/tun"                      # Required for tailscale to work
+    cap_add:                                               # Required for tailscale to work
+      - net_admin
+      - sys_module
+    restart: unless-stopped
